@@ -1,7 +1,17 @@
+import { useRouter } from 'next/dist/client/router'
 import Head from 'next/head'
 import Link from 'next/link'
 
+import styles from './Layout.module.css'
+
+const offsets = {
+  '/': 0,
+  '/about': 100
+}
+
 const Layout = ({ children }) => {
+  const { pathname } = useRouter()
+  const offset = offsets[pathname] || offsets['/']
   return (
     <>
       <Head>
@@ -10,9 +20,9 @@ const Layout = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <nav>
-          <Link href='/'>{'Home'}</Link>
-          <Link href='/about'>{'About'}</Link>
+        <nav className={styles.nav} style={{ transform: `translateX(${offset}px)` }}>
+          <Link shallow href='/'>{'Home'}</Link>
+          <Link shallow href='/about'>{'About'}</Link>
         </nav>
         <main>
           {children}
