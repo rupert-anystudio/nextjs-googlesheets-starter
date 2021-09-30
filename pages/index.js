@@ -18,12 +18,13 @@ export default function Home({ clients }) {
   )
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps({ preview = false }) {
   const clients = await getClients()
   return {
     props: {
       clients,
+      preview,
     },
-    revalidate: 30,
+    revalidate: 300, // every 5 minutes
   }
 }
